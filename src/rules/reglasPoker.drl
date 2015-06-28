@@ -1,0 +1,408 @@
+import modelo.*;
+import java.util.ArrayList
+import java.util.List
+ 
+ 
+rule "R01 - Jugador Loose Pasivo"
+	salience 5
+	
+	when
+		//contrincantes : List()
+        contrincante : Contrincante()// from contrincantes
+        
+        eval(
+       			 (
+				(contrincante.getCantidadCall() * 100f / contrincante.getTotalRondasJugadas() >= 80f)
+			&&
+			    (contrincante.getRondasGanadas() < contrincante.getTotalRondasJugadas() / 2f)
+			&&
+				(contrincante.getTipo() != Contrincante.TipoJugador.LoosePasivo)	
+				)	
+		)  
+     then
+        contrincante.setTipo(Contrincante.TipoJugador.LoosePasivo);
+        //update(contrincantes);
+        update(contrincante);
+end
+
+rule "R02 - Jugador Loose Agresivo"
+	salience 5
+	when
+		//contrincantes : List()
+		contrincante : Contrincante()// from contrincantes
+		        and
+        
+        eval((
+				(contrincante.getCantidadRaise() * 100f / contrincante.getTotalRondasJugadas() >= 60f)
+			&&
+				(contrincante.getRondasGanadas() < contrincante.getTotalRondasJugadas() / 2f)
+			&& 
+				(contrincante.getTipo() != Contrincante.TipoJugador.LooseAgresivo)
+				) 
+		) 
+     then
+		contrincante.setTipo(Contrincante.TipoJugador.LooseAgresivo);
+         //update(contrincantes);
+        update(contrincante);
+end
+
+rule "R03 - Jugador Tight Pasivo"
+
+	
+	salience 5
+	when
+	    //contrincantes : List()
+		contrincante : Contrincante()// from contrincantes 
+		eval(
+          		((contrincante.getCantidadFold() * 100f / contrincante.getTotalRondasJugadas() >= 50f)
+			&&
+				(contrincante.getRondasGanadas() > contrincante.getTotalRondasJugadas() / 2f)
+			&& 
+				(contrincante.getTipo() != Contrincante.TipoJugador.TightPasivo)
+				)
+		  ) 
+     then
+          contrincante.setTipo(Contrincante.TipoJugador.TightPasivo);
+          //update(contrincantes);
+        update(contrincante);	
+end
+
+rule "R04 - Jugador Tight Agresivo"
+	salience 4
+	
+	when	
+		//contrincantes : List()
+        contrincante : Contrincante()// from contrincantes 
+		eval( (
+				(contrincante.getTipo() != Contrincante.TipoJugador.LoosePasivo)
+          	&&
+          		(contrincante.getTipo() != Contrincante.TipoJugador.LooseAgresivo)
+			&&
+          		(contrincante.getTipo() != Contrincante.TipoJugador.TightPasivo)
+          	&&
+          		(contrincante.getTipo() != Contrincante.TipoJugador.TightAgresivo)
+          		)
+		)           
+     then
+          contrincante.setTipo(Contrincante.TipoJugador.TightAgresivo);
+           //update(contrincantes);
+        update(contrincante);                  
+end
+
+rule "R05 - Mano escalera Real"
+	salience 3
+	
+	when
+		jugador : Jugador (mano == Jugador.Mano.EscaleraReal  && jugador.odds != 1)
+	then
+		jugador.setOdds(1);
+		update(jugador);
+end
+
+rule "R06 - Mano Escalera Color"
+	salience 3
+	
+	when
+		jugador : Jugador (mano == Jugador.Mano.EscaleraColor && jugador.odds != 4 )
+	then
+		jugador.setOdds(4);
+		update(jugador);
+end
+
+rule "R07 - Mano Poker"
+	salience 3
+	
+	when
+		jugador : Jugador (mano == Jugador.Mano.Poker  && jugador.odds != 9)
+	then
+		jugador.setOdds(9);
+		update(jugador);		
+end
+
+rule "R08 - Mano Full"
+	salience 3
+	
+	when
+		jugador : Jugador (mano == Jugador.Mano.Full  && jugador.odds != 16)
+	then
+		jugador.setOdds(16);
+		update(jugador);
+end
+
+rule "R09 - Mano Color"
+	salience 3
+	
+	when
+		jugador : Jugador (mano == Jugador.Mano.Color  && jugador.odds != 25)
+	then
+		jugador.setOdds(25);
+		update(jugador);
+end
+
+rule "R10 - Mano Escalera"
+	salience 3
+	
+	when
+		jugador : Jugador (mano == Jugador.Mano.Escalera  && jugador.odds != 36)
+	then
+		jugador.setOdds(36);
+		update(jugador);
+end
+
+rule "R11 - Mano Trio "
+	salience 3
+	
+	when
+		jugador : Jugador (mano == Jugador.Mano.Trio  && jugador.odds != 49)
+	then
+		jugador.setOdds(49);
+		update(jugador);
+end
+
+rule "R12 - Mano Doble pareja"
+	salience 3
+	
+	when
+		jugador : Jugador (mano == Jugador.Mano.DoblePareja && odds != 64)
+	then
+		jugador.setOdds(64);
+		update(jugador);
+end
+
+rule "R13 - Mano Pareja"
+	salience 3
+	
+	when
+		jugador : Jugador (mano == Jugador.Mano.Pareja  && jugador.odds != 81)
+	then
+		jugador.setOdds(81);
+		update(jugador);
+		
+end
+
+rule "R14 - Mano Carta Alta"
+	salience 3
+	
+	when
+		jugador : Jugador (mano == Jugador.Mano.CartaAlta  && jugador.odds != 100)
+	then
+		jugador.setOdds(100);
+		update(jugador);
+end
+
+rule "R15 - Ajuste por jugador Tight Agresivo"
+	salience 2
+	
+	when
+		jugador : Jugador()
+		//contrincantes : List()
+        //contrincante : Contrincante() from contrincantes
+		jugadoresTightAgresivo : 
+			ArrayList() 
+			from collect( 
+				Contrincante( tipo == Contrincante.TipoJugador.TightAgresivo )
+				from jugador.contrincantes  
+			)
+		eval( 
+				jugadoresTightAgresivo.size() >= 1 
+			&& 
+				jugador.getAjusteOdds() != (81 - jugador.getOdds()) 
+		) 
+	then
+		jugador.setAjusteOdds( 81 - jugador.getOdds() );
+		update(jugador);
+		
+		
+end
+
+
+rule "R16 - Ajuste por jugador Tight Pasivo"
+	salience 2
+	
+	when
+		jugador : Jugador()
+		jugadoresTightAgresivo : 
+				ArrayList() 
+				from collect( 
+					Contrincante( tipo == Contrincante.TipoJugador.TightAgresivo )
+					from jugador.contrincantes  
+				)
+		jugadoresTightPasivo : 
+				ArrayList() 
+				from collect( 
+					Contrincante( tipo == Contrincante.TipoJugador.TightPasivo )
+					from jugador.contrincantes  
+				)
+		eval( 
+				jugadoresTightAgresivo.size() == 0 
+			&& 
+				jugadoresTightPasivo.size() >= 1
+			&&
+				jugador.getAjusteOdds() != 0 
+		)
+			
+	then
+		jugador.setAjusteOdds(0);
+		update(jugador);
+		
+end
+
+
+rule "R17 - Ajuste por jugador Loose agresivo"
+	salience 2
+	//lock-on-active true
+	when
+		jugador : Jugador()
+		jugadoresTightAgresivo : 
+				ArrayList() 
+				from collect( 
+					Contrincante( tipo == Contrincante.TipoJugador.TightAgresivo )
+					from jugador.contrincantes  
+				)
+		
+		jugadoresTightPasivo : 
+				ArrayList() 
+				from collect( 
+					Contrincante( tipo == Contrincante.TipoJugador.TightPasivo )
+					from jugador.contrincantes  
+				)
+		
+		jugadoresLooseAgresivo : 
+				ArrayList() 
+				from collect( 
+					Contrincante( tipo == Contrincante.TipoJugador.LooseAgresivo )
+					from jugador.contrincantes  
+				)
+		eval( 
+					jugadoresTightAgresivo.size() == 0 
+				&& 
+					jugadoresTightPasivo.size() == 0
+				&&
+					jugadoresLooseAgresivo.size() >= 1
+				&&
+					jugador.getAjusteOdds() != -2 
+		 )
+			
+	then
+		jugador.setAjusteOdds(-2);
+		update(jugador);
+		
+end
+
+rule "R18 - Ajuste por jugador Loose Pasivo"
+	salience 2
+	//lock-on-active true
+	when
+		jugador : Jugador()
+		jugadoresTightAgresivo : 
+				ArrayList() 
+				from collect( 
+					Contrincante( tipo == Contrincante.TipoJugador.TightAgresivo )
+					from jugador.contrincantes  
+				)
+		
+		jugadoresTightPasivo : 
+				ArrayList() 
+				from collect( 
+					Contrincante( tipo == Contrincante.TipoJugador.TightPasivo )
+					from jugador.contrincantes  
+				)
+		
+		jugadoresLooseAgresivo : 
+				ArrayList() 
+				from collect( 
+					Contrincante( tipo == Contrincante.TipoJugador.LooseAgresivo )
+					from jugador.contrincantes  
+				)
+		jugadoresLoosePasivo : 
+				ArrayList() 
+				from collect( 
+					Contrincante( tipo == Contrincante.TipoJugador.LoosePasivo )
+					from jugador.contrincantes  
+				)
+				
+		eval( 
+					jugadoresTightAgresivo.size() == 0 
+				&& 
+					jugadoresTightPasivo.size() == 0
+				&&
+					jugadoresLooseAgresivo.size() == 0
+				&&
+					jugadoresLoosePasivo.size() >= 1
+				&&	
+					jugador.getAjusteOdds() != -10 
+		 )
+			
+	then
+		jugador.setAjusteOdds(-10);
+		update(jugador);
+		
+end
+
+		
+rule "R19 - Odds pozo vs odds Jugador"
+	salience 1
+	//lock-on-active true
+	when
+		jugador : Jugador()
+		pozo : Pozo();
+		
+		eval( pozo.getOdds() >= jugador.getOddsFinales() ) 
+	then
+		jugador.setAccion(Jugador.Accion.Call);
+		//update(jugador);
+end
+
+rule "R20 - Jugador tiene poker"
+	salience 1
+	//lock-on-active true
+	when
+		jugador : Jugador( jugador.mano == Jugador.Mano.Poker )				 
+	then
+		jugador.setAccion(Jugador.Accion.Call);
+		//update(jugador);
+end
+
+rule "R21 - Jugador tiene escalera de color"
+	salience 1
+	//lock-on-active true
+	when
+		jugador : Jugador( jugador.mano == Jugador.Mano.EscaleraColor )				 
+	then
+		jugador.setAccion(Jugador.Accion.Call);
+		//update(jugador);
+end
+
+rule "R22 - Jugador tiene escalera real"
+	salience 1
+	//lock-on-active true
+	when
+		jugador : Jugador( jugador.mano == Jugador.Mano.EscaleraReal )				 
+	then
+		jugador.setAccion(Jugador.Accion.Call);
+		//update(jugador);
+end
+
+rule "R23 - Jugador se va"
+	salience 0
+	//lock-on-active true
+	when
+		jugador : Jugador()
+		pozo : Pozo();
+		eval( (
+				(pozo.getOdds() < jugador.getOddsFinales())
+			&&
+				(jugador.getMano() != Jugador.Mano.Poker)
+			&&
+				(jugador.getMano() != Jugador.Mano.EscaleraColor)
+			&&
+				(jugador.getMano() != Jugador.Mano.EscaleraReal)
+				)
+		)
+	
+	then
+		jugador.setAccion(Jugador.Accion.Fold);
+        //update(jugador);  
+end
+			
+
