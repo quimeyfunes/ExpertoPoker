@@ -13,6 +13,7 @@ package UI;
 import javax.swing.JOptionPane;
 import modelo.Game;
 import modelo.Jugador.Mano;
+import java.awt.Color;
 
 /**
  *
@@ -36,11 +37,14 @@ public class Step2 extends Step {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel1.setForeground(Color.WHITE);
         montoMano = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel2.setForeground(Color.WHITE);
         apuestaRequerida = new javax.swing.JTextField();
         manos = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
+        jLabel3.setForeground(Color.WHITE);
 
         jLabel1.setText("Monto de la mano:");
         jLabel1.setName("jLabel1"); // NOI18N
@@ -49,6 +53,8 @@ public class Step2 extends Step {
 
         jLabel2.setText("Apuesta requerida:");
         jLabel2.setName("jLabel2"); // NOI18N
+        
+        this.setBackground("imagenes/snookar-cloth-first-grade.jpg");
 
         apuestaRequerida.setName("apuestaRequerida"); // NOI18N
 

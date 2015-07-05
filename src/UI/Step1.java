@@ -11,13 +11,21 @@
 package UI;
 
 import java.awt.Dialog;
+import java.awt.Graphics;
+import java.awt.Image;
+
 import javax.swing.JOptionPane;
+
 import modelo.Game;
 
-/**
- *
- * @author alverbner
- */
+import javax.swing.JLabel;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+
+
 public class Step1 extends Step {
 
     /** Creates new form Step1 */
@@ -35,33 +43,36 @@ public class Step1 extends Step {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel1.setForeground(Color.WHITE);
         playerCount = new javax.swing.JTextField();
 
         jLabel1.setText("Por favor, ingrese la cantidad de contrincantes:");
         jLabel1.setName("jLabel1"); // NOI18N
 
-        playerCount.setName("playerCount"); // NOI18N
+        playerCount.setName("playerCount");
+        
+        this.setBackground("imagenes/snookar-cloth-first-grade.jpg");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(playerCount, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(34)
+        			.addComponent(jLabel1)
+        			.addGap(18)
+        			.addComponent(playerCount, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(playerCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(173, Short.MAX_VALUE))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(30)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel1)
+        				.addComponent(playerCount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap(251, Short.MAX_VALUE))
         );
+        this.setLayout(layout);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

@@ -15,11 +15,8 @@ import modelo.Game;
 import modelo.Jugador;
 import modelo.Jugador.Accion;
 import modelo.Jugador.Mano;
+import java.awt.Color;
 
-/**
- *
- * @author alverbner
- */
 public class Step4 extends Step {
 
     private int jugadorActual = 0;
@@ -40,6 +37,7 @@ public class Step4 extends Step {
     private void initComponents() {
 
         label = new javax.swing.JLabel();
+        label.setForeground(Color.WHITE);
         acciones = new javax.swing.JComboBox();
 
         label.setText("Acción jugador 1:");
@@ -52,6 +50,8 @@ public class Step4 extends Step {
                 accionesActionPerformed(evt);
             }
         });
+        
+        this.setBackground("imagenes/snookar-cloth-first-grade.jpg");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

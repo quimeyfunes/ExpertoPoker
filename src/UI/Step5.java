@@ -14,11 +14,8 @@ import modelo.Contrincante;
 import modelo.Game;
 import modelo.Jugador;
 import modelo.Jugador.Accion;
+import java.awt.Color;
 
-/**
- *
- * @author alverbner
- */
 public class Step5 extends Step {
 
     private int jugadorActual = 0;
@@ -39,6 +36,7 @@ public class Step5 extends Step {
     private void initComponents() {
 
         label = new javax.swing.JLabel();
+        label.setForeground(Color.WHITE);
         jugadores = new javax.swing.JComboBox();
 
         label.setText("El ganador de la partida fue:");
@@ -51,7 +49,9 @@ public class Step5 extends Step {
                 jugadoresActionPerformed(evt);
             }
         });
-
+        
+        this.setBackground("imagenes/snookar-cloth-first-grade.jpg");
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(

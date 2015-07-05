@@ -16,10 +16,6 @@ import modelo.Game;
 
 import modelo.Jugador;
 
-/**
- *
- * @author alverbner
- */
 public class Step3 extends Step {
 
    
@@ -41,6 +37,7 @@ public class Step3 extends Step {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel1.setForeground(Color.WHITE);
         accion = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(433, 223));
@@ -53,6 +50,8 @@ public class Step3 extends Step {
         accion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         accion.setText("ASD");
         accion.setName("accion"); // NOI18N
+        
+        this.setBackground("imagenes/snookar-cloth-first-grade.jpg");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
