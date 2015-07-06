@@ -14,10 +14,6 @@ package UI;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- *
- * @author alverbner
- */
 public class MainWindow extends javax.swing.JFrame {
 
     private List<Step> steps;
